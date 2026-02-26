@@ -60,7 +60,30 @@ const AdminPanel = () => {
     };
 
     if (loading) {
-        return <Layout><div className="loading" style={{ color: 'var(--primary)' }}><ShieldAlert className="animate-pulse" /> <span>Secure Admin Gateway...</span></div></Layout>;
+        return (
+            <Layout>
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'var(--bg-dark)',
+                    zIndex: 100,
+                    color: 'var(--primary)',
+                    fontSize: '1.25rem',
+                    fontWeight: 600,
+                    flexDirection: 'column',
+                    gap: '1rem'
+                }}>
+                    <ShieldAlert className="animate-pulse" size={48} />
+                    <span>Secure Admin Gateway...</span>
+                </div>
+            </Layout>
+        );
     }
 
     const filteredUsers = users.filter(u =>

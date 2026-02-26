@@ -176,7 +176,30 @@ const Subscription = () => {
     };
 
     if (loading) {
-        return <Layout><div className="loading" style={{ color: 'var(--primary)' }}><Clock className="animate-pulse" /> <span>Syncing your benefits...</span></div></Layout>;
+        return (
+            <Layout>
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'var(--bg-dark)',
+                    zIndex: 100,
+                    color: 'var(--primary)',
+                    fontSize: '1.25rem',
+                    fontWeight: 600,
+                    flexDirection: 'column',
+                    gap: '1rem'
+                }}>
+                    <Clock className="animate-pulse" size={48} />
+                    <span>Syncing your benefits...</span>
+                </div>
+            </Layout>
+        );
     }
 
     const isPro = currentSubscription?.plan === 'pro';

@@ -91,7 +91,27 @@ const Goals = () => {
     };
 
     if (loading) {
-        return <Layout><div className="loading">Visualizing your aspirations...</div></Layout>;
+        return (
+            <Layout>
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'var(--bg-dark)',
+                    zIndex: 100,
+                    color: 'var(--primary)',
+                    fontSize: '1.25rem',
+                    fontWeight: 600
+                }}>
+                    Visualizing your aspirations...
+                </div>
+            </Layout>
+        );
     }
 
     return (

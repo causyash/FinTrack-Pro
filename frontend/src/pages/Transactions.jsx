@@ -169,17 +169,44 @@ const Transactions = () => {
     };
 
     if (loading) {
-        return <Layout><div className="loading">Analyzing your records...</div></Layout>;
+        return (
+            <Layout>
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'var(--bg-dark)',
+                    zIndex: 100,
+                    color: 'var(--primary)',
+                    fontSize: '1.25rem',
+                    fontWeight: 600
+                }}>
+                    Analyzing your records...
+                </div>
+            </Layout>
+        );
     }
 
     return (
         <Layout>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center', 
+                marginBottom: '2.5rem',
+                flexWrap: 'wrap',
+                gap: '1rem'
+            }}>
                 <div>
-                    <h1 style={{ fontSize: '2.25rem', fontWeight: 800 }}>Transactions</h1>
-                    <p style={{ color: 'var(--text-muted)' }}>Detailed log of your financial history</p>
+                    <h1 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.25rem)', fontWeight: 800 }}>Transactions</h1>
+                    <p style={{ color: 'var(--text-muted)', fontSize: 'clamp(0.875rem, 3vw, 1rem)' }}>Detailed log of your financial history</p>
                 </div>
-                <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>
+                <button className="btn btn-primary" onClick={() => setIsModalOpen(true)} style={{ whiteSpace: 'nowrap' }}>
                     <Plus size={20} />
                     <span>Add Transaction</span>
                 </button>

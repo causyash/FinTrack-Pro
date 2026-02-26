@@ -406,6 +406,63 @@ body {
   font-weight: 600;
 }
 
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  /* Reduce padding on mobile */
+  .main-content {
+    padding: 1rem !important;
+  }
+  
+  /* Smaller cards on mobile */
+  .card {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+  
+  /* Table adjustments */
+  .table th,
+  .table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Form inputs full width on mobile */
+  .form-input,
+  .form-select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Stats grid single column on mobile */
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Modal full screen on mobile */
+  .modal-content {
+    width: 95% !important;
+    max-height: 90vh !important;
+    padding: 1.5rem !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .table th,
+  .table td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+  }
+  
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .card-title {
+    font-size: 1rem;
+  }
+}
+
 @media (max-width: 1024px) {
   .auth-card { width: 50vw; }
 }

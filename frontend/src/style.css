@@ -1,0 +1,5 @@
+/* Global base styles moved to App.css or handled by Layout */
+body {
+  margin: 0;
+  padding: 0;
+}

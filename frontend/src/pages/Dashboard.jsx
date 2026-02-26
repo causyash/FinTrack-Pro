@@ -88,7 +88,13 @@ const Dashboard = () => {
     if (loading) {
         return (
             <Layout>
-                <div className="loading" style={{ color: 'var(--primary)' }}>
+                <div className="loading" style={{ 
+                    color: 'var(--primary)',
+                    minHeight: '60vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
                     <div style={{ textAlign: 'center' }}>
                         <Zap className="animate-pulse" size={48} style={{ marginBottom: '1rem' }} />
                         <p>Curating your financial insights...</p>

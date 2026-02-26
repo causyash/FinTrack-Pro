@@ -149,11 +149,32 @@ const Layout = ({ children }) => {
                     display: 'none',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    marginBottom: '2rem'
+                    padding: '1rem 1.5rem',
+                    marginBottom: '1rem',
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'var(--bg-dark)',
+                    zIndex: 50,
+                    borderBottom: '1px solid var(--glass-border)'
                 }} className="mobile-header">
                     <Link to="/" style={{ fontSize: '1.25rem', fontWeight: 800, textDecoration: 'none', color: 'inherit' }}>FinTrackPro</Link>
-                    <button onClick={() => setMobileMenuOpen(true)}>
-                        <Menu />
+                    <button 
+                        onClick={() => setMobileMenuOpen(true)}
+                        style={{
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            borderRadius: '0.75rem',
+                            padding: '0.75rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            color: 'var(--text-main)'
+                        }}
+                    >
+                        <Menu size={24} />
                     </button>
                 </header>
 
@@ -210,6 +231,7 @@ const Layout = ({ children }) => {
                 __html: `
         @media (max-width: 768px) {
           .mobile-header { display: flex !important; }
+          .main-content { padding-top: 5rem !important; }
         }
       `}} />
         </div>

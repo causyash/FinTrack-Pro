@@ -19,7 +19,19 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
     const { isAuthenticated, loading, isAdmin } = useAuth();
 
     if (loading) {
-        return <div className="loading">Loading...</div>;
+        return (
+            <div className="loading" style={{
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--primary)',
+                fontSize: '1.25rem',
+                fontWeight: 600
+            }}>
+                Loading...
+            </div>
+        );
     }
 
     if (!isAuthenticated) {
@@ -38,7 +50,19 @@ const PublicRoute = ({ children }) => {
     const { isAuthenticated, loading } = useAuth();
 
     if (loading) {
-        return <div className="loading">Loading...</div>;
+        return (
+            <div className="loading" style={{
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--primary)',
+                fontSize: '1.25rem',
+                fontWeight: 600
+            }}>
+                Loading...
+            </div>
+        );
     }
 
     if (isAuthenticated) {

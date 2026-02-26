@@ -90,10 +90,16 @@ const Dashboard = () => {
             <Layout>
                 <div className="loading" style={{ 
                     color: 'var(--primary)',
-                    minHeight: '60vh',
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    background: 'var(--bg-dark)',
+                    zIndex: 100
                 }}>
                     <div style={{ textAlign: 'center' }}>
                         <Zap className="animate-pulse" size={48} style={{ marginBottom: '1rem' }} />

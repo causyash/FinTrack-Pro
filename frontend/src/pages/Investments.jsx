@@ -72,8 +72,11 @@ const Investments = () => {
             // Then fetch growth data separately to handle errors
             try {
                 const growthRes = await investmentAPI.getGrowthData();
-                console.log('Growth data:', growthRes.data);
-                setGrowthData(growthRes.data.data || []);
+                console.log('Growth data response:', growthRes.data);
+                const growthDataArray = growthRes.data.data || [];
+                console.log('Growth data array:', growthDataArray);
+                console.log('Investments length:', investmentsRes.data.data.investments.length);
+                setGrowthData(growthDataArray);
                 setGrowthStats({
                     daysRecorded: growthRes.data.daysRecorded || 0,
                     daysRemaining: growthRes.data.daysRemaining || 100
@@ -326,7 +329,36 @@ const Investments = () => {
                                 Upgrade to Pro
                             </button>
                         </div>
-                    ) : growthData.length > 0 ? (
+                    ) : investments.length === 0 ? (
+                        <div style={{ 
+                            height: '350px', 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            color: 'var(--text-muted)',
+                            textAlign: 'center',
+                            padding: '2rem'
+                        }}>
+                            <TrendingUp size={64} opacity={0.2} style={{ marginBottom: '1.5rem' }} />
+                            <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>Start Your Investment Journey</h3>
+                            <p style={{ maxWidth: '400px', marginBottom: '1.5rem' }}>
+                                Add your first investment to start tracking your portfolio growth.
+                            </p>
+                            <div style={{ 
+                                display: 'flex', 
+                                gap: '0.5rem', 
+                                alignItems: 'center',
+                                padding: '0.75rem 1rem',
+                                background: 'rgba(99, 102, 241, 0.1)',
+                                borderRadius: '0.75rem',
+                                fontSize: '0.875rem'
+                            }}>
+                                <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{planLimits.remaining} investments</span>
+                                <span>remaining on free plan</span>
+                            </div>
+                        </div>
+                    ) : growthData.length > 0 && growthData.some(data => data.value > 0 || data.invested > 0) ? (
                         <ResponsiveContainer width="100%" height={350}>
                             <AreaChart data={growthData}>
                                 <defs>

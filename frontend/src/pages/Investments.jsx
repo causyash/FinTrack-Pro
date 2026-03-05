@@ -76,7 +76,15 @@ const Investments = () => {
                 const growthDataArray = growthRes.data.data || [];
                 console.log('Growth data array:', growthDataArray);
                 console.log('Investments length:', investmentsRes.data.data.investments.length);
-                setGrowthData(growthDataArray);
+                
+                // Only set growth data if there are current investments and meaningful data
+                if (investmentsRes.data.data.investments.length > 0 && 
+                    growthDataArray.some(data => data.value > 0 || data.invested > 0)) {
+                    setGrowthData(growthDataArray);
+                } else {
+                    setGrowthData([]);
+                }
+                
                 setGrowthStats({
                     daysRecorded: growthRes.data.daysRecorded || 0,
                     daysRemaining: growthRes.data.daysRemaining || 100
@@ -189,6 +197,8 @@ const Investments = () => {
         
         try {
             await investmentAPI.delete(id);
+            // Clear growth data when investment is deleted to prevent showing stale data
+            setGrowthData([]);
             fetchInvestments();
         } catch (error) {
             console.error('Error deleting investment:', error);
@@ -358,7 +368,7 @@ const Investments = () => {
                                 <span>remaining on free plan</span>
                             </div>
                         </div>
-                    ) : growthData.length > 0 && growthData.some(data => data.value > 0 || data.invested > 0) ? (
+                    ) : investments.length > 0 && growthData.length > 0 && growthData.some(data => data.value > 0 || data.invested > 0) ? (
                         <ResponsiveContainer width="100%" height={350}>
                             <AreaChart data={growthData}>
                                 <defs>

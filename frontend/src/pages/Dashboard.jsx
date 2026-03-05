@@ -388,42 +388,61 @@ const Dashboard = () => {
                             {dateRange.label}
                         </span>
                     </div>
-                    <ResponsiveContainer width="100%" height={280}>
-                        <AreaChart data={expenseChartData}>
-                            <defs>
-                                <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.4} />
-                                    <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
-                            <XAxis
-                                dataKey="month"
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{ fill: 'var(--text-muted)', fontSize: 11 }}
-                            />
-                            <YAxis
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{ fill: 'var(--text-muted)', fontSize: 11 }}
-                                tickFormatter={(value) => `₹${value >= 1000 ? (value/1000) + 'k' : value}`}
-                            />
-                            <Tooltip 
-                                content={<CustomTooltip />}
-                                cursor={{ stroke: 'rgba(99, 102, 241, 0.3)', strokeWidth: 2 }}
-                            />
-                            <Area 
-                                type="monotone" 
-                                dataKey="amount" 
-                                stroke="var(--primary)" 
-                                strokeWidth={3} 
-                                fillOpacity={1} 
-                                fill="url(#colorAmount)" 
-                                animationDuration={1500}
-                            />
-                        </AreaChart>
-                    </ResponsiveContainer>
+                    {expenseChartData.length > 0 ? (
+                        <ResponsiveContainer width="100%" height={280}>
+                            <AreaChart data={expenseChartData}>
+                                <defs>
+                                    <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.4} />
+                                        <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                                <XAxis
+                                    dataKey="month"
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: 'var(--text-muted)', fontSize: 11 }}
+                                />
+                                <YAxis
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: 'var(--text-muted)', fontSize: 11 }}
+                                    tickFormatter={(value) => `₹${value >= 1000 ? (value/1000) + 'k' : value}`}
+                                />
+                                <Tooltip 
+                                    content={<CustomTooltip />}
+                                    cursor={{ stroke: 'rgba(99, 102, 241, 0.3)', strokeWidth: 2 }}
+                                />
+                                <Area 
+                                    type="monotone" 
+                                    dataKey="amount" 
+                                    stroke="var(--primary)" 
+                                    strokeWidth={3} 
+                                    fillOpacity={1} 
+                                    fill="url(#colorAmount)" 
+                                    animationDuration={1500}
+                                />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    ) : (
+                        <div style={{ 
+                            height: '280px', 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            color: 'var(--text-muted)',
+                            textAlign: 'center',
+                            padding: '2rem'
+                        }}>
+                            <TrendingUp size={48} opacity={0.2} style={{ marginBottom: '1rem' }} />
+                            <h4 style={{ fontSize: '1rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>No Expense Data</h4>
+                            <p style={{ fontSize: '0.875rem', maxWidth: '300px' }}>
+                                Start adding transactions to see your spending trends over time.
+                            </p>
+                        </div>
+                    )}
                 </motion.div>
 
                 {/* Category Breakdown */}
@@ -449,57 +468,78 @@ const Dashboard = () => {
                             <span style={{ fontSize: '1.125rem', fontWeight: 700 }}>Spending by Category</span>
                         </div>
                     </div>
-                    <ResponsiveContainer width="100%" height={280}>
-                        <PieChart>
-                            <Pie
-                                data={categoryChartData}
-                                cx="50%"
-                                cy="50%"
-                                innerRadius={60}
-                                outerRadius={90}
-                                paddingAngle={5}
-                                dataKey="amount"
-                                nameKey="name"
-                                stroke="none"
-                                animationBegin={0}
-                                animationDuration={1000}
-                            >
-                                {categoryChartData.map((entry, index) => (
-                                    <Cell 
-                                        key={`cell-${index}`} 
-                                        fill={COLORS[index % COLORS.length]}
-                                        style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))' }}
-                                    />
-                                ))}
-                            </Pie>
-                            <Tooltip content={<CustomTooltip />} />
-                        </PieChart>
-                    </ResponsiveContainer>
-                    {/* Legend */}
-                    <div style={{ 
-                        display: 'flex', 
-                        flexWrap: 'wrap', 
-                        gap: '0.75rem', 
-                        marginTop: '1rem',
-                        justifyContent: 'center'
-                    }}>
-                        {categoryChartData.slice(0, 4).map((entry, index) => (
-                            <div key={entry.name} style={{ 
+                    {categoryChartData.length > 0 ? (
+                        <>
+                            <ResponsiveContainer width="100%" height={280}>
+                                <PieChart>
+                                    <Pie
+                                        data={categoryChartData}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={60}
+                                        outerRadius={90}
+                                        paddingAngle={5}
+                                        dataKey="amount"
+                                        nameKey="name"
+                                        stroke="none"
+                                        animationBegin={0}
+                                        animationDuration={1000}
+                                    >
+                                        {categoryChartData.map((entry, index) => (
+                                            <Cell 
+                                                key={`cell-${index}`} 
+                                                fill={COLORS[index % COLORS.length]}
+                                                style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))' }}
+                                            />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip content={<CustomTooltip />} />
+                                </PieChart>
+                            </ResponsiveContainer>
+                            {/* Legend */}
+                            <div style={{ 
                                 display: 'flex', 
-                                alignItems: 'center', 
-                                gap: '0.5rem',
-                                fontSize: '0.75rem'
+                                flexWrap: 'wrap', 
+                                gap: '0.75rem', 
+                                marginTop: '1rem',
+                                justifyContent: 'center'
                             }}>
-                                <div style={{ 
-                                    width: '8px', 
-                                    height: '8px', 
-                                    borderRadius: '50%', 
-                                    background: COLORS[index % COLORS.length] 
-                                }} />
-                                <span style={{ color: 'var(--text-muted)' }}>{entry.name}</span>
+                                {categoryChartData.slice(0, 4).map((entry, index) => (
+                                    <div key={entry.name} style={{ 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        gap: '0.5rem',
+                                        fontSize: '0.75rem'
+                                    }}>
+                                        <div style={{ 
+                                            width: '8px', 
+                                            height: '8px', 
+                                            borderRadius: '50%', 
+                                            background: COLORS[index % COLORS.length] 
+                                        }} />
+                                        <span style={{ color: 'var(--text-muted)' }}>{entry.name}</span>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
+                        </>
+                    ) : (
+                        <div style={{ 
+                            height: '280px', 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            color: 'var(--text-muted)',
+                            textAlign: 'center',
+                            padding: '2rem'
+                        }}>
+                            <PieChartIcon size={48} opacity={0.2} style={{ marginBottom: '1rem' }} />
+                            <h4 style={{ fontSize: '1rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>No Category Data</h4>
+                            <p style={{ fontSize: '0.875rem', maxWidth: '300px' }}>
+                                Add transactions with categories to see your spending breakdown.
+                            </p>
+                        </div>
+                    )}
                 </motion.div>
                 </div>
 

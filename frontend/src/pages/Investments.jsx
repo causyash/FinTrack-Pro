@@ -382,23 +382,27 @@ const Investments = () => {
                             padding: '2rem'
                         }}>
                             <TrendingUp size={64} opacity={0.2} style={{ marginBottom: '1.5rem' }} />
-                            <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>Start Your Investment Journey</h3>
+                            <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>No Investment Data Available</h3>
                             <p style={{ maxWidth: '400px', marginBottom: '1.5rem' }}>
-                                Add your first investment and update its value daily to see your growth chart. 
-                                Available while you have <strong>100 or fewer investments</strong> on your free plan!
+                                {investments.length === 0 
+                                    ? 'Add your first investment to start tracking your portfolio growth.'
+                                    : 'Update your investment values daily to see growth trajectory data.'
+                                }
                             </p>
-                            <div style={{ 
-                                display: 'flex', 
-                                gap: '0.5rem', 
-                                alignItems: 'center',
-                                padding: '0.75rem 1rem',
-                                background: 'rgba(99, 102, 241, 0.1)',
-                                borderRadius: '0.75rem',
-                                fontSize: '0.875rem'
-                            }}>
-                                <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{planLimits.remaining} investments</span>
-                                <span>remaining on free plan</span>
-                            </div>
+                            {investments.length === 0 && (
+                                <div style={{ 
+                                    display: 'flex', 
+                                    gap: '0.5rem', 
+                                    alignItems: 'center',
+                                    padding: '0.75rem 1rem',
+                                    background: 'rgba(99, 102, 241, 0.1)',
+                                    borderRadius: '0.75rem',
+                                    fontSize: '0.875rem'
+                                }}>
+                                    <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{planLimits.remaining} investments</span>
+                                    <span>remaining on free plan</span>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

@@ -78,9 +78,28 @@ const Investments = () => {
                 console.log('Investments length:', investmentsRes.data.data.investments.length);
                 
                 // Only set growth data if there are current investments and meaningful data
+                // Also filter out any stale data that doesn't match current investment state
                 if (investmentsRes.data.data.investments.length > 0 && 
                     growthDataArray.some(data => data.value > 0 || data.invested > 0)) {
-                    setGrowthData(growthDataArray);
+                    
+                    // Filter growth data to only include recent entries (last 30 days)
+                    const thirtyDaysAgo = new Date();
+                    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                    
+                    const filteredGrowthData = growthDataArray.filter(data => {
+                        const dataDate = new Date(data.date);
+                        return dataDate >= thirtyDaysAgo;
+                    });
+                    
+                    console.log('Filtered growth data (last 30 days):', filteredGrowthData);
+                    
+                    // Only set growth data if we have recent meaningful data
+                    if (filteredGrowthData.length > 0 && 
+                        filteredGrowthData.some(data => data.value > 0 || data.invested > 0)) {
+                        setGrowthData(filteredGrowthData);
+                    } else {
+                        setGrowthData([]);
+                    }
                 } else {
                     setGrowthData([]);
                 }
@@ -124,6 +143,9 @@ const Investments = () => {
                 currentValue: '',
                 notes: ''
             });
+            
+            // Clear growth data and refetch to ensure today's data is captured
+            setGrowthData([]);
             fetchInvestments();
         } catch (error) {
             console.error('Error adding investment:', error);
@@ -182,6 +204,9 @@ const Investments = () => {
 
             setIsEditModalOpen(false);
             setSelectedInvestment(null);
+            
+            // Clear growth data and refetch to ensure today's data is captured
+            setGrowthData([]);
             fetchInvestments();
         } catch (error) {
             console.error('Error updating investment:', error);
